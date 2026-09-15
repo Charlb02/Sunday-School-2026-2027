@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// الرسل الصغار 2026 — Firestore security rules
+//
+// Firebase has no way to switch public signup off: anyone holding the public
+// web config can create an account. So an account by itself grants nothing.
+// Access is decided by membership of the `admins` collection.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /registrations/{id} {
+      // Parents never write directly. Submissions arrive through the server
+      // action, which uses the Admin SDK and bypasses these rules.
+      allow create: if false;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // The allowlist itself is managed from the Firebase console only.
+    // isAdmin() above still works: exists() is evaluated by the rules engine,
+    // not by the client, so it does not need read access here.
+    match /admins/{uid} {
+      allow read, write: if false;
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
