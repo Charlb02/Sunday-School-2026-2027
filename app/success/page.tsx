@@ -5,8 +5,10 @@ export default function SuccessPage() {
     <>
       <header className="masthead">
         <h1>
-          الرسل الصغار
-          <span className="year">٢٠٢٦</span>
+          مدرسة الأحد
+          <span className="year" style={{ fontSize: "0.7em", color: "#fff" }}>
+            استمارة التسجيل
+          </span>
         </h1>
       </header>
       <main className="shell">

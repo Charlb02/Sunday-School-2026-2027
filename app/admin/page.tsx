@@ -30,14 +30,20 @@ export default function AdminPage() {
         const reg: Registration = {
           id: doc.id,
           created_at: d.created_at?.toDate?.().toISOString() ?? new Date().toISOString(),
-          parent1_name: d.parent1_name,
-          parent2_name: d.parent2_name ?? null,
-          address: d.address,
-          phone1: d.phone1,
-          phone2: d.phone2 ?? null,
-          email: d.email,
+          father_name: d.father_name ?? null,
+          father_phone: d.father_phone ?? null,
+          mother_name: d.mother_name ?? null,
+          mother_phone: d.mother_phone ?? null,
+          parish: d.parish ?? "",
+          email: d.email ?? "",
+          city: d.city ?? "",
+          street: d.street ?? "",
+          house: d.house ?? "",
+          postal_code: d.postal_code ?? null,
+          emergency_phone: d.emergency_phone ?? "",
           photo_consent: !!d.photo_consent,
-          mass_consent: !!d.mass_consent,
+          declaration: !!d.declaration,
+          signer_name: d.signer_name ?? "",
           children: d.children ?? [],
         };
         reg.children.forEach((child) => flat.push({ child, reg }));
@@ -80,7 +86,7 @@ export default function AdminPage() {
   return (
     <>
       <div className="admin-bar">
-        <h1>الرسل الصغار ٢٠٢٦ — لوحة الإدارة</h1>
+        <h1>مدرسة الأحد — لوحة الإدارة</h1>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <span style={{ fontSize: "0.85rem", color: "#cfdaee" }} dir="ltr">
             {user?.email}
@@ -135,7 +141,7 @@ function LoginCard() {
           لوحة إدارة التسجيل
         </h1>
         <p style={{ color: "var(--ink-soft)", fontSize: "0.9rem", marginTop: 0 }}>
-          الرسل الصغار ٢٠٢٦
+          مدرسة الأحد
         </p>
 
         <div className="field">

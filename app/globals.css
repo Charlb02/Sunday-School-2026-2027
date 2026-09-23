@@ -232,3 +232,90 @@ tbody tr:hover { background: #fafbfd; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* =================================================================
+   Colour-coded sections, echoing the printed form
+   ================================================================= */
+.sec {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  margin-top: 1.5rem;
+}
+.sec-head {
+  background: var(--sec, var(--azure-wash));
+  padding: 0.7rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: "Amiri", Georgia, serif;
+  font-size: 1.3rem;
+  color: var(--ink);
+}
+.sec-num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  font-weight: 600;
+  flex: none;
+}
+.sec-body { padding: 1.35rem; }
+.sec-body > .hint:first-child { margin-top: 0; }
+
+/* ---- masthead extras --------------------------------------------- */
+.hero-img {
+  display: block;
+  max-width: 100%;
+  width: min(30rem, 100%);
+  height: auto;
+  margin: 0 auto 1.25rem;
+  border-radius: 12px;
+}
+.verse {
+  font-family: "Amiri", Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #eadfc4;
+  max-width: 32rem;
+  margin: 1rem auto 0;
+}
+.verse cite { display: block; font-size: 0.82rem; font-style: normal; color: #b9c8e2; margin-top: 0.3rem; }
+
+.ornament { display: block; margin: 0 auto 0.75rem; }
+.ornament-foot { display: block; margin: 2.5rem auto 0; opacity: 0.55; }
+
+.thanks {
+  text-align: center;
+  font-family: "Amiri", Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.9;
+  color: var(--azure);
+  margin-top: 1.5rem;
+}
+
+/* ---- child card tinted to match section 1 ------------------------ */
+.child-card { background: #fcfdff; }
+
+/* ---- sacrament block --------------------------------------------- */
+.sacrament-box {
+  border: 1px dashed var(--gold);
+  border-radius: 9px;
+  padding: 1.1rem;
+  background: #fdfaf3;
+  margin-top: 0.5rem;
+}
+.sacrament-box > h4 {
+  font-family: "Amiri", Georgia, serif;
+  font-size: 1.15rem;
+  margin: 0 0 0.2rem;
+  color: #8a6420;
+}
+.choices-stack { display: flex; flex-direction: column; gap: 0.5rem; }
+.choices-stack .choice { flex: initial; }
+.choice small { display: block; color: var(--ink-soft); font-size: 0.82rem; }

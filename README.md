@@ -1,4 +1,4 @@
-# الرسل الصغار 2026 — Registration App (Firebase)
+# مدرسة الأحد — Registration App (Firebase)
 
 Arabic (RTL) Sunday School registration form with an admin dashboard, built on
 Next.js + Firebase. Runs free on Vercel's Hobby tier and Firebase's Spark plan.
@@ -165,8 +165,11 @@ automatically; otherwise use **Page Layout → Sheet Right-to-Left**.
 
 | What | Where |
 |---|---|
-| Age range (currently 3–12) | `app/actions.ts` and `app/page.tsx`, search `age < 3` |
-| Wording of the two consent clauses | `app/page.tsx`, the الموافقات section |
+| Age range (currently 4–12) | `app/actions.ts` and `app/page.tsx`, search `4` in the age checks |
+| Grade list, and which grades get the sacrament section | `lib/types.ts`, the `GRADES` array — the only place to edit |
+| Lesson / celebration locations and times | `lib/types.ts`, `LESSONS_LABEL` and `CELEBRATION_LABEL` |
+| Header illustration | drop `hero.png` into `public/` |
+| Consent wording | `app/page.tsx`, section 4 |
 | Notes-field placeholder examples | `app/page.tsx`, `NOTES_PLACEHOLDER` |
 | Colours and fonts | `app/globals.css`, the `:root` block |
 | Excel column headers | `app/admin/Dashboard.tsx`, `exportExcel` |

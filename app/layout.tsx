@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "الرسل الصغار 2026 — استمارة التسجيل",
-  description: "تسجيل الأطفال في نشاطات مدرسة الأحد — الرسل الصغار 2026",
+  title: "مدرسة الأحد — استمارة التسجيل",
+  description: "استمارة تسجيل الأطفال في نشاطات مدرسة الأحد، للأعمار من 4 إلى 12 سنة",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
