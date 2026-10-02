@@ -331,3 +331,12 @@ tbody tr:hover { background: #fafbfd; }
   color: #7a5718;
 }
 .clear-link { margin-top: 0.4rem; color: var(--ink-soft) !important; }
+
+.err.banner {
+  background: #fdf2f1;
+  border: 1px solid #e8c4bf;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  line-height: 1.8;
+}

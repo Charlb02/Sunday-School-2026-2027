@@ -133,11 +133,6 @@ export default function RegistrationPage() {
       if (c.has_allergy === "") e[`c${i}.has_allergy`] = "يرجى اختيار نعم أو لا";
       if (c.has_allergy === "yes" && c.allergy_details.trim().length < 2)
         e[`c${i}.allergy_details`] = "يرجى تحديد نوع الحساسية";
-      if (sacramentFor(c.grade)) {
-        if (c.sponsor_name.trim().length < 2) e[`c${i}.sponsor`] = "يرجى إدخال اسم الإشبين/الإشبينة";
-        if (!c.lessons_place) e[`c${i}.lessons`] = "يرجى اختيار مكان الدروس التحضيرية";
-        if (!c.celebration_place) e[`c${i}.celebration`] = "يرجى اختيار مكان الاحتفال بالسر";
-      }
     });
 
     const fatherOk = fatherName.trim().length > 1 && fatherPhone.trim().length > 5;
@@ -161,8 +156,12 @@ export default function RegistrationPage() {
     const e = validate();
     setErrors(e);
     if (Object.keys(e).length) {
-      setBanner("يرجى مراجعة الحقول المظللة بالأحمر قبل الإرسال.");
-      document.querySelector(".invalid")?.scrollIntoView({ block: "center", behavior: "smooth" });
+      // List every outstanding message. If a field ever lacks its own inline
+      // error, it still shows up here instead of blocking the form silently.
+      setBanner(Array.from(new Set(Object.values(e))).join(" • "));
+      const target =
+        document.querySelector(".invalid") ?? document.querySelector(".err");
+      target?.scrollIntoView({ block: "center", behavior: "smooth" });
       return;
     }
     setBanner("");
@@ -537,7 +536,11 @@ export default function RegistrationPage() {
           </Section>
 
           <div className="submit-row">
-            {banner && <p className="err" role="alert" style={{ margin: 0 }}>{banner}</p>}
+            {banner && (
+              <p className="err banner" role="alert">
+                يرجى إكمال ما يلي قبل الإرسال: {banner}
+              </p>
+            )}
             <button type="submit" className="btn btn-primary" disabled={busy}>
               {busy ? "جارٍ الإرسال…" : "إرسال التسجيل"}
             </button>
