@@ -3,11 +3,15 @@ export type SacramentType = "communion" | "confirmation";
 export type LessonsPlace = "beit_hanina" | "old_city";
 export type CelebrationPlace = "beit_hanina" | "jerusalem";
 
+// Fields are nullable: they are required in practice only for Latin-rite
+// families, which the form states as a note rather than enforcing. Children of
+// other rites (Orthodox, Eastern Catholic) may already have received these
+// sacraments at baptism, so blocking them would be wrong.
 export type Sacrament = {
   type: SacramentType;
-  sponsor_name: string;
-  lessons_place: LessonsPlace;
-  celebration_place: CelebrationPlace;
+  sponsor_name: string | null;
+  lessons_place: LessonsPlace | null;
+  celebration_place: CelebrationPlace | null;
 };
 
 export type ChildDoc = {
@@ -81,3 +85,6 @@ export const CELEBRATION_LABEL: Record<CelebrationPlace, string> = {
 };
 
 export const GENDER_LABEL: Record<Gender, string> = { male: "ذكر", female: "أنثى" };
+
+export const LATIN_RITE_NOTE =
+  "هذه المعلومات إجبارية لكل من ينتمي إلى الطائفة اللاتينية";

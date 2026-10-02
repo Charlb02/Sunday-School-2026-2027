@@ -10,6 +10,7 @@ import {
   SACRAMENT_LABEL,
   LESSONS_LABEL,
   CELEBRATION_LABEL,
+  LATIN_RITE_NOTE,
   type Gender,
   type LessonsPlace,
   type CelebrationPlace,
@@ -185,9 +186,9 @@ export default function RegistrationPage() {
           sacrament: t
             ? {
                 type: t,
-                sponsor_name: c.sponsor_name,
-                lessons_place: c.lessons_place as LessonsPlace,
-                celebration_place: c.celebration_place as CelebrationPlace,
+                sponsor_name: c.sponsor_name || null,
+                lessons_place: (c.lessons_place || null) as LessonsPlace | null,
+                celebration_place: (c.celebration_place || null) as CelebrationPlace | null,
               }
             : null,
         };
@@ -311,16 +312,16 @@ export default function RegistrationPage() {
                       <p className="hint">
                         يظهر هذا القسم لأنّ الطفل في {GRADES.find((g) => g.key === c.grade)?.label}.
                       </p>
+                      <p className="rite-note">{LATIN_RITE_NOTE}</p>
 
                       <div className="field">
-                        <label><span className="req">*</span> اسم الإشبين / الإشبينة</label>
-                        <input type="text" className={cls(`c${i}.sponsor`)} value={c.sponsor_name}
+                        <label>اسم الإشبين / الإشبينة</label>
+                        <input type="text" value={c.sponsor_name}
                           onChange={(e) => patch(c.key, { sponsor_name: e.target.value })} />
-                        {errors[`c${i}.sponsor`] && <p className="err">{errors[`c${i}.sponsor`]}</p>}
                       </div>
 
                       <div className="field">
-                        <label><span className="req">*</span> المكان المرغوب للالتزام بالدروس التحضيرية</label>
+                        <label>المكان المرغوب للالتزام بالدروس التحضيرية</label>
                         <div className="choices-stack">
                           {(Object.keys(LESSONS_LABEL) as LessonsPlace[]).map((k) => (
                             <label className="choice" key={k}>
@@ -333,11 +334,16 @@ export default function RegistrationPage() {
                             </label>
                           ))}
                         </div>
-                        {errors[`c${i}.lessons`] && <p className="err">{errors[`c${i}.lessons`]}</p>}
+                        {c.lessons_place && (
+                          <button type="button" className="btn-link clear-link"
+                            onClick={() => patch(c.key, { lessons_place: "" })}>
+                            مسح الاختيار
+                          </button>
+                        )}
                       </div>
 
                       <div className="field" style={{ marginBottom: 0 }}>
-                        <label><span className="req">*</span> المكان المرغوب للاحتفال بالسرّ المقدّس</label>
+                        <label>المكان المرغوب للاحتفال بالسرّ المقدّس</label>
                         <div className="choices-stack">
                           {(Object.keys(CELEBRATION_LABEL) as CelebrationPlace[]).map((k) => (
                             <label className="choice" key={k}>
@@ -347,7 +353,12 @@ export default function RegistrationPage() {
                             </label>
                           ))}
                         </div>
-                        {errors[`c${i}.celebration`] && <p className="err">{errors[`c${i}.celebration`]}</p>}
+                        {c.celebration_place && (
+                          <button type="button" className="btn-link clear-link"
+                            onClick={() => patch(c.key, { celebration_place: "" })}>
+                            مسح الاختيار
+                          </button>
+                        )}
                       </div>
                     </div>
                   )}

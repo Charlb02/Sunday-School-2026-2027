@@ -79,8 +79,10 @@ export default function Dashboard({
       "ملاحظات إضافية": child.notes ?? "",
       السرّ: child.sacrament ? SACRAMENT_LABEL[child.sacrament.type] : "",
       "اسم الإشبين/الإشبينة": child.sacrament?.sponsor_name ?? "",
-      "مكان الدروس التحضيرية": child.sacrament ? LESSONS_LABEL[child.sacrament.lessons_place] : "",
-      "مكان الاحتفال بالسرّ": child.sacrament ? CELEBRATION_LABEL[child.sacrament.celebration_place] : "",
+      "مكان الدروس التحضيرية": child.sacrament?.lessons_place
+        ? LESSONS_LABEL[child.sacrament.lessons_place] : "",
+      "مكان الاحتفال بالسرّ": child.sacrament?.celebration_place
+        ? CELEBRATION_LABEL[child.sacrament.celebration_place] : "",
       "اسم الأب / وليّ الأمر": reg.father_name ?? "",
       "هاتف الأب": reg.father_phone ?? "",
       "اسم الأم / وليّة الأمر": reg.mother_name ?? "",
@@ -189,12 +191,14 @@ export default function Dashboard({
                       </span>
                     ) : "—"}
                   </td>
-                  <td>{child.sacrament?.sponsor_name ?? "—"}</td>
+                  <td>{child.sacrament?.sponsor_name || "—"}</td>
                   <td className="wrapcell">
-                    {child.sacrament ? LESSONS_LABEL[child.sacrament.lessons_place] : "—"}
+                    {child.sacrament?.lessons_place
+                      ? LESSONS_LABEL[child.sacrament.lessons_place] : "—"}
                   </td>
                   <td className="wrapcell">
-                    {child.sacrament ? CELEBRATION_LABEL[child.sacrament.celebration_place] : "—"}
+                    {child.sacrament?.celebration_place
+                      ? CELEBRATION_LABEL[child.sacrament.celebration_place] : "—"}
                   </td>
                   <td><YesNo v={child.has_allergy} /></td>
                   <td className="wrapcell">{child.allergy_details ?? "—"}</td>
@@ -267,7 +271,7 @@ function EditModal({
       grade: g,
       sacrament: c.sacrament
         ? { ...c.sacrament, type: t }
-        : { type: t, sponsor_name: "", lessons_place: "beit_hanina", celebration_place: "beit_hanina" },
+        : { type: t, sponsor_name: null, lessons_place: null, celebration_place: null },
     });
   }
 
@@ -347,13 +351,14 @@ function EditModal({
               <h4>سرّ {SACRAMENT_LABEL[sac.type]}</h4>
               <div className="field">
                 <label>اسم الإشبين / الإشبينة</label>
-                <input type="text" value={sac.sponsor_name}
+                <input type="text" value={sac.sponsor_name ?? ""}
                   onChange={(e) => setC({ ...c, sacrament: { ...sac, sponsor_name: e.target.value } })} />
               </div>
               <div className="field">
                 <label>مكان الدروس التحضيرية</label>
-                <select value={sac.lessons_place}
-                  onChange={(e) => setC({ ...c, sacrament: { ...sac, lessons_place: e.target.value as any } })}>
+                <select value={sac.lessons_place ?? ""}
+                  onChange={(e) => setC({ ...c, sacrament: { ...sac, lessons_place: (e.target.value || null) as any } })}>
+                  <option value="">— غير محدّد —</option>
                   {(Object.keys(LESSONS_LABEL) as (keyof typeof LESSONS_LABEL)[]).map((k) => (
                     <option key={k} value={k}>{LESSONS_LABEL[k]}</option>
                   ))}
@@ -361,8 +366,9 @@ function EditModal({
               </div>
               <div className="field" style={{ marginBottom: 0 }}>
                 <label>مكان الاحتفال بالسرّ</label>
-                <select value={sac.celebration_place}
-                  onChange={(e) => setC({ ...c, sacrament: { ...sac, celebration_place: e.target.value as any } })}>
+                <select value={sac.celebration_place ?? ""}
+                  onChange={(e) => setC({ ...c, sacrament: { ...sac, celebration_place: (e.target.value || null) as any } })}>
+                  <option value="">— غير محدّد —</option>
                   {(Object.keys(CELEBRATION_LABEL) as (keyof typeof CELEBRATION_LABEL)[]).map((k) => (
                     <option key={k} value={k}>{CELEBRATION_LABEL[k]}</option>
                   ))}

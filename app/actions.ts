@@ -17,7 +17,6 @@ const ar = {
   parent: "يرجى إدخال اسم ورقم هاتف أحد الوالدين على الأقل",
   declaration: "يجب الإقرار بصحة المعلومات لإتمام التسجيل",
   photo: "يرجى اختيار نعم أو لا",
-  sponsor: "يرجى إدخال اسم الإشبين/الإشبينة",
   sacrament: "يرجى إكمال بيانات سرّ المناولة الأولى أو التثبيت",
   noChildren: "يرجى إضافة طفل واحد على الأقل",
 };
@@ -31,11 +30,12 @@ function ageOn(dob: string): number {
   return age;
 }
 
+// Optional throughout — see the note on Sacrament in lib/types.ts.
 const sacramentSchema = z.object({
   type: z.enum(["communion", "confirmation"]),
-  sponsor_name: z.string().trim().min(2, ar.sponsor),
-  lessons_place: z.enum(["beit_hanina", "old_city"]),
-  celebration_place: z.enum(["beit_hanina", "jerusalem"]),
+  sponsor_name: z.string().trim().optional().nullable(),
+  lessons_place: z.enum(["beit_hanina", "old_city"]).optional().nullable(),
+  celebration_place: z.enum(["beit_hanina", "jerusalem"]).optional().nullable(),
 });
 
 const childSchema = z
@@ -131,7 +131,14 @@ export async function submitRegistration(raw: unknown) {
           allergy_details: c.has_allergy ? c.allergy_details || null : null,
           other_condition: c.other_condition || null,
           notes: c.notes || null,
-          sacrament: c.sacrament,
+          sacrament: c.sacrament
+            ? {
+                type: c.sacrament.type,
+                sponsor_name: c.sacrament.sponsor_name || null,
+                lessons_place: c.sacrament.lessons_place ?? null,
+                celebration_place: c.sacrament.celebration_place ?? null,
+              }
+            : null,
         })),
       });
   } catch (e) {

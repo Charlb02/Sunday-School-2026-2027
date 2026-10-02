@@ -319,3 +319,15 @@ tbody tr:hover { background: #fafbfd; }
 .choices-stack { display: flex; flex-direction: column; gap: 0.5rem; }
 .choices-stack .choice { flex: initial; }
 .choice small { display: block; color: var(--ink-soft); font-size: 0.82rem; }
+
+/* note shown inside the sacrament block */
+.rite-note {
+  background: #f6ecd6;
+  border-right: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: #7a5718;
+}
+.clear-link { margin-top: 0.4rem; color: var(--ink-soft) !important; }
